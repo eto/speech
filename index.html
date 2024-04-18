@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>音声認識テスト</title>
+</head>
+<body>
+    <button id="start">音声認識を開始</button>
+    <div id="results"></div>
+    <script>
+        const startButton = document.getElementById('start');
+        const resultsDiv = document.getElementById('results');
+
+        startButton.onclick = () => {
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'ja-JP';
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                resultsDiv.textContent = '認識結果: ' + speechResult;
+                console.log('認識結果: ', speechResult);
+            };
+            recognition.onerror = (event) => {
+                console.error('音声認識エラー: ', event.error);
+            };
+            recognition.start();
+        };
+    </script>
+</body>
+</html>
